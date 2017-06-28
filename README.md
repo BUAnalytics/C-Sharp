@@ -19,7 +19,7 @@ BUAPI.Instance.Auth = new BUAccessKey("58569825377ba00001ae8315", "KUygr6BUxhEts
 The hostname defaults to the university server although we can change this if necessary.
 
 ```csharp
-BUAPI.Instance.URL = "https://bu-games.bmth.ac.uk";
+BUAPI.Instance.URL = "https://192.168.0.x";
 BUAPI.Instance.Path = "/api/v1";
 ```
 
@@ -43,14 +43,14 @@ Documents support nested dictionaries, arrays and will encode literal data types
 
 ```csharp
 var userDoc = new BUDocument(new Dictionary<string, object>(){
-    { "userId", userId },
-    { "name", nameField.text },
-    { "age", age },
-    { "gender", gender },
+    { "userId", .. },
+    { "name", .. },
+    { "age", .. },
+    { "gender", .. },
     { "device", new Dictionary<string, string>{
-        { "type", SystemInfo.deviceType.ToString() },
-        { "name", SystemInfo.deviceName },
-        { "model", SystemInfo.deviceModel },
+        { "type", .. },
+        { "name", .. },
+        { "model", .. },
     } }
 });
 ```
@@ -59,10 +59,10 @@ You can also create documents through the add method or can access the raw dicti
 
 ```csharp
 var userDoc = new BUDocument();
-userDoc.Add("userId", userId);
-userDoc.Add("name", nameField.text);
-userDoc.Add("age", age);
-userDoc.Add("gender", gender);
+userDoc.Add("userId", ..);
+userDoc.Add("name", ..);
+userDoc.Add("age", ..);
+userDoc.Add("gender", ..);
 ```
 
 ## Adding a Document to Collection
