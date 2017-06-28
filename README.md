@@ -2,11 +2,11 @@
 
 BU Analytics C# and Unity plugin written in .NET.
 
-For source please navigate to [src/Assets/Plugins/BUAnalytics](src/Assets/Plugins/BUAnalytics).
+For the library please navigate to [Plugins](src/Assets/Plugins/BUAnalytics).
 
 ## Installation
 
-To install the plugin you must copy the BUGamesLab folder into your Unity project under the /Assets/Plugins directory.
+To install the plugin you must copy the [BUAnalytics](src/Assets/Plugins) folder into your Unity project under the /Assets/Plugins directory.
 
 ## Authentication
 
@@ -25,7 +25,8 @@ BGAPI.Instance.Path = "/api/v1";
 
 ## Creating Collections
 
-We must then create the collections that we would like to use throughout the application. This can be done at any point and as many times as needed however collections will not be overwritten if created with a duplicate names.
+We must then create the collections that we would like to use throughout the application. 
+This can be done at any point and as many times as needed however collections will not be overwritten if created with a duplicate names.
 
 ```csharp
 BGCollectionManager.Instance.Create(new string[]{
@@ -37,7 +38,8 @@ BGCollectionManager.Instance.Create(new string[]{
 
 ## Creating a Document
 
-We can create a document using a dictionary literal that allows for as many nested values as needed. Documents support nested dictionaries, arrays and will encode literal data types when uploading to the backend server.
+We can create a document using a dictionary literal that allows for as many nested values as needed. 
+Documents support nested dictionaries, arrays and will encode literal data types when uploading to the backend server.
 
 ```csharp
 var userDoc = new BGDocument(new Dictionary<string, object>(){
@@ -72,14 +74,16 @@ BGCollectionManager.Instance.Collections["Users"].Add(userDoc);
 BGCollectionManager.Instance.Collections["Users"].AddRange(new BGDocument[]{ userDoc1, userDoc2, userDoc3 });
 ```
 
-Collections will automatically push all documents to the backend server every two seconds if not empty. You can also manually initiate an upload either on all or a specific collection.
+Collections will automatically push all documents to the backend server every two seconds if not empty. 
+You can also manually initiate an upload either on all or a specific collection.
 
 ```csharp
 BGCollectionManager.Instance.UploadAll();
 BGCollectionManager.Instance.Collections["Users"].Upload();
 ```
 
-You can also use the interval property to configure how often collections are uploaded in milliseconds. The default is 2000 milliseconds and setting it to 0 will disable automatic uploads.
+You can also use the interval property to configure how often collections are uploaded in milliseconds. 
+The default is 2000 milliseconds and setting it to 0 will disable automatic uploads.
 
 ```csharp
 BGCollectionManager.Instance.Interval = 4000;
