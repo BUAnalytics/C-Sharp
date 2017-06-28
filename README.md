@@ -1,6 +1,6 @@
 # C# and Unity Plugin
 
-BU Analytics C# and Unity plugin written in .NET.
+BU Analytics plugin for C# and Unity written in .NET.
 
 For the library please navigate to [Plugins](src/Assets/Plugins/BUAnalytics).
 
