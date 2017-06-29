@@ -121,7 +121,7 @@ Once the cache has been marked as ready you can generate identifiers at any time
 
 ```csharp
 if (BUID.Instance.IsReady){
-	userDoc.Add("userId", BUID.Instance.Generate());
+  userDoc.Add("userId", BUID.Instance.Generate());
 }
 ```
 
