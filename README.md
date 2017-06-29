@@ -10,16 +10,17 @@ To install the plugin you must copy the [BUAnalytics](src/Assets/Plugins) folder
 
 ## Authentication
 
-To authenticate with the backend you must first create an access key through the web management interface. Then pass these details into the api singleton instance.
+To authenticate with the backend you must first create an access key through the web management interface.
+Then pass these details into the api singleton instance.
 
 ```csharp
-BUAPI.Instance.Auth = new BUAccessKey("58569825377ba00001ae8315", "KUygr6BUxhEtsSQ1RJYla2UCtiEE8R");
+BUAPI.Instance.Auth = new BUAccessKey("58ac40cd126553000c426f91", "06239e3a1401ba6d7250260d0f8fd680e52ff1e754ebe10a250297ebda2bac41");
 ```
 
 The hostname defaults to the university server although we can change this if necessary.
 
 ```csharp
-BUAPI.Instance.URL = "https://bu-games.bmth.ac.uk";
+BUAPI.Instance.URL = "https://192.168.0.x";
 BUAPI.Instance.Path = "/api/v1";
 ```
 

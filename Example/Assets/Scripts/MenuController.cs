@@ -25,7 +25,7 @@ public class MenuController : MonoBehaviour {
 
 		//Set backend api url and authentication details
 		BUAPI.Instance.Auth = new BUAccessKey("58ac40cd126553000c426f91", "06239e3a1401ba6d7250260d0f8fd680e52ff1e754ebe10a250297ebda2bac41");
-		//BGAPI.Instance.URL = "https://192.168.0.11"; //Defaults to https://bu-games.bmth.ac.uk
+		//BGAPI.Instance.URL = "https://192.168.0.69"; //Defaults to https://bu-games.bmth.ac.uk
 
 		//Start loading a cache of 200 unique identifiers from backend
 		BUID.Instance.Start(200);
