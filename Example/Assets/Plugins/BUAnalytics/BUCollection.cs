@@ -52,7 +52,7 @@ namespace BUAnalytics{
 			BUAPI.Instance.RequestWithPath("/projects/collections/" + Name + "/documents", BUMethod.POST, body, (code) => {
 
 				//Log error code
-				Trace.TraceError("[BUAnalytics][" + Name + "] Failed to push " + Buffer.Count + " documents to server with error code " + error);
+				Trace.TraceError("[BUAnalytics][" + Name + "] Failed to push " + Buffer.Count + " documents to server with error code " + code);
 
 				//Move buffer back to documents list
 				Documents.AddRange(Buffer);

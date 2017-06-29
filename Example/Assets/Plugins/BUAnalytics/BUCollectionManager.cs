@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Timers;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace BUAnalytics{
 	
@@ -38,33 +37,34 @@ namespace BUAnalytics{
 
 		//Push documents in all collections to backend server
 		private void UploadAllPerform(object source, ElapsedEventArgs e){
-			this.UploadAll ();
+			UploadAll();
 
 			//Create timer to push all collections every x milliseconds
 			if (Interval > 0) {
-				var timer = new Timer ();
-				timer.Elapsed += new ElapsedEventHandler (UploadAllPerform);
+				var timer = new Timer();
+				timer.Elapsed += new ElapsedEventHandler(UploadAllPerform);
 				timer.Interval = Interval;
 				timer.AutoReset = false;
-				timer.Start ();
+				timer.Start();
 			}
 		}
 		public void UploadAll(){
 			
 			//Upload all collections and forward response to error or success handlers
 			foreach (BUCollection collection in Collections.Values){
+				var col = collection;
 				collection.Upload((code) => {
-
+					
 					//Notify error
 					if (Error != null){
-						Error.Invoke(collection, code);
+						Error.Invoke(col, code);
 					}
 
 				}, (count) => {
-
+					
 					//Notify succes
 					if (Success != null){
-						Success.Invoke(collection, count);
+						Success.Invoke(col, count);
 					}
 				});
 			}

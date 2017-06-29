@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BUAnalytics;
 
-public class ButtonController : MonoBehaviour {
+public class GameController : MonoBehaviour {
 
 	int clicksRemaining = 5;
 	float startTime;
@@ -19,6 +19,9 @@ public class ButtonController : MonoBehaviour {
 
 		//Set session start
 		sessionStart = DateTime.UtcNow;
+
+		//Generate unique session identifier
+		Utility.sessionId = BUID.Instance.Generate();
 	}
 
 	IEnumerator DelayButton(){
@@ -28,6 +31,7 @@ public class ButtonController : MonoBehaviour {
 
 			//Create new session in collection
 			var sessionDoc = new BUDocument(new Dictionary<string, object>(){
+				{ "sessionId", Utility.sessionId },
 				{ "userId", Utility.userId },
 				{ "start", sessionStart },
 				{ "end", DateTime.UtcNow }
@@ -80,6 +84,7 @@ public class ButtonController : MonoBehaviour {
 
 		//Create new click and add it to list
 		var clickDoc = new BUDocument(new Dictionary<string, object>(){
+			{ "sessionId", Utility.sessionId },
 			{ "userId", Utility.userId },
 			{ "clickTime", clickTime },
 			{ "delayTime", delayTime },

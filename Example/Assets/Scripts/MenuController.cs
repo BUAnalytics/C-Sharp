@@ -24,8 +24,11 @@ public class MenuController : MonoBehaviour {
 		genderSelect = GameObject.Find("GenderSelect").GetComponentInChildren<Dropdown>();
 
 		//Set backend api url and authentication details
-		BUAPI.Instance.Auth = new BUAccessKey("589b26caf31e1c0016ba3772", "c64469453e073989c1b7a22273211b1d8af949b6b9d6e9f3a06900bccd179d54");
+		BUAPI.Instance.Auth = new BUAccessKey("58ac40cd126553000c426f91", "06239e3a1401ba6d7250260d0f8fd680e52ff1e754ebe10a250297ebda2bac41");
 		//BGAPI.Instance.URL = "https://192.168.0.11"; //Defaults to https://bu-games.bmth.ac.uk
+
+		//Start loading a cache of 200 unique identifiers from backend
+		BUID.Instance.Start(200);
 
 		//Create collections with names
 		BUCollectionManager.Instance.Create(new string[]{
@@ -44,8 +47,9 @@ public class MenuController : MonoBehaviour {
 			Debug.Log("[BUAnalytics][" + collection.Name + "] Successfully uploaded " + count.ToString() + " documents");
 		};
 
-		//Configure upload checks to be performed every 4 seconds
+		//Configure upload and id refresh checks to be performed every 4 seconds
 		BUCollectionManager.Instance.Interval = 4000;
+		BUID.Instance.Interval = 4000;
 	}
 
 	public void StartClicked(){
@@ -73,8 +77,10 @@ public class MenuController : MonoBehaviour {
 				return;
 			}
 
-			//Generate user id hash from two unique bits of information
-			Utility.userId = Utility.MD5(nameField.text + gender.ToString());
+			//Generate unique user identifier
+			if (Utility.userId == null){
+				Utility.userId = BUID.Instance.Generate();
+			}
 
 			//Create new user in collection
 			var userDoc = new BUDocument(new Dictionary<string, object>(){
