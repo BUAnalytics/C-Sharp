@@ -44,14 +44,14 @@ Documents support nested dictionaries, arrays and will encode literal data types
 
 ```csharp
 var userDoc = new BUDocument(new Dictionary<string, object>(){
-    { "userId", userId },
-    { "name", nameField.text },
-    { "age", age },
-    { "gender", gender },
+    { "userId", .. },
+    { "name", .. },
+    { "age", .. },
+    { "gender", .. },
     { "device", new Dictionary<string, string>{
-        { "type", SystemInfo.deviceType.ToString() },
-        { "name", SystemInfo.deviceName },
-        { "model", SystemInfo.deviceModel },
+        { "type", .. },
+        { "name", .. },
+        { "model", .. },
     } }
 });
 ```
@@ -60,10 +60,12 @@ You can also create documents through the add method or can access the raw dicti
 
 ```csharp
 var userDoc = new BUDocument();
-userDoc.Add("userId", userId);
-userDoc.Add("name", nameField.text);
-userDoc.Add("age", age);
-userDoc.Add("gender", gender);
+
+userDoc.Add("userId", ..);
+userDoc.Add("name", ..);
+
+userDoc.Contents["age"] = ..;
+userDoc.Contents["gender"] = ..;
 ```
 
 ## Adding a Document to Collection
@@ -105,3 +107,28 @@ BUCollectionManager.Instance.Success = (collection, successCount) => {
 ```
 
 You can also provide error and success actions to an individual collection using the upload method.
+
+## Unique Identifiers
+
+You can use our backend to generate unique identifiers for use inside documents.
+Setup the cache at startup specifying how many identifiers you'd like to hold.
+
+```csharp
+BUID.Instance.Start(200);
+```
+
+Once the cache has been marked as ready you can generate identifiers at any time.
+
+```csharp
+if (BUID.Instance.IsReady){
+	userDoc.Add("userId", BUID.Instance.Generate());
+}
+```
+
+You can modify the refresh frequency or size of the cache depending on how many identifiers you require.
+GUIDs will be generated as a backup should the cache become empty.
+
+```csharp
+BUID.Instance.Interval = 4000;
+BUID.Instance.Size = 100;
+```

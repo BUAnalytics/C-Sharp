@@ -49,8 +49,8 @@ namespace BUAnalytics{
 		//Push documents in all collections to backend server
 		private void RefreshPerform(object source, ElapsedEventArgs e){
 
-			//Only refresh if identifier cache is half empty
-			if (Identifiers.Count < Size / 2){
+			//Only refresh if identifier cache is a quarter empty
+			if (Identifiers.Count < ((Size / 4) * 3)){
 				Refresh();
 			}
 
