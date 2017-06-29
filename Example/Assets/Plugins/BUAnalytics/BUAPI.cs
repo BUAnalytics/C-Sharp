@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Diagnostics;
 
 namespace BUAnalytics{
 
@@ -128,54 +129,60 @@ namespace BUAnalytics{
 						}
 
 					} else {
+
+						//Log error code
+						Trace.TraceError("[BUAnalytics] Failed to make request to server with exception " + exception);
+
 						error.Invoke (BUError.Unknown);
 					}
 				}
 				return;
 			}
 
+			//Check string response was given
+			var result = response.Trim();
+			if (result == "") {
+				if (error != null) {
+					error.Invoke (BUError.Json);
+				}
+				return;
+			}
+
+			//Empty json was returned
+			if (result == "{}") {
+				if (success != null) {
+					success.Invoke(new JSONClass());
+				}
+				return;
+			}
+
 			//Process the received response
+			JSONNode json;
 			try {
-
-				//Check string response was given
-				var result = response.Trim();
-				if (result == "") {
-					if (error != null) {
-						error.Invoke (BUError.Json);
-					}
-					return;
-				}
-
-				//Empty json was returned
-				if (result == "{}") {
-					if (success != null) {
-						success.Invoke (new JSONClass());
-					}
-					return;
-				}
-
+				
 				//Attempt to parse json string from stream
-				var json = JSON.Parse (result);
-
-				//Check for server side errors
-				if (json ["error"] != null) {
-					if (error != null) {
-						error.Invoke((BUError)json["error"].AsInt);
-					}
-					return;
-				}
-
-				//Return the successful json object
-				if (success != null){
-					success.Invoke(json);
-				}
+				json = JSON.Parse(result);
 
 			} catch {
 
 				//JSON failed to parse
 				if (error != null) {
-					error.Invoke (BUError.Json);
+					error.Invoke(BUError.Json);
 				}
+				return;
+			}
+
+			//Check for server side errors
+			if (json["error"] != null) {
+				if (error != null) {
+					error.Invoke((BUError)json["error"].AsInt);
+				}
+				return;
+			}
+
+			//Return the successful json object
+			if (success != null){
+				success.Invoke(json);
 			}
 		}
 
