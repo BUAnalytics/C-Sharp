@@ -18,6 +18,12 @@ namespace BUAnalytics{
 		public void Add(string key, object value){
 			Contents.Add(key, value);
 		}
+
+		public void AddRange(Dictionary<string, object> document){
+			foreach (var item in document){
+				Contents.Add(item.Key, item.Value);
+			}
+		}
 	}
 
 }

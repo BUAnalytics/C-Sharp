@@ -30,9 +30,20 @@ namespace BUAnalytics{
 				}
 
 				//Create new collection
-				var collection = new BUCollection(name);
-				Collections.Add(name, collection);
+				Collections.Add(name, new BUCollection(name));
 			}
+		}
+
+		//Convenience method for adding a document to a collection and creating the collection if non-existant
+		public void Add(string collection, BUDocument document){
+
+			//Check whether document exists and create
+			if  (!Collections.ContainsKey(collection)){
+				Collections.Add(collection, new BUCollection (collection));
+			}
+
+			//Add document to collection
+			Collections[collection].Add(document);
 		}
 
 		//Push documents in all collections to backend server
