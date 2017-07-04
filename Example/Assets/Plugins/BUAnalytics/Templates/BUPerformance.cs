@@ -34,7 +34,7 @@ namespace BUAnalytics{
 			//Add optional fields
 			if (Name != null){ Add("name", Name); }
 
-			this.Upload(Collection ?? "Performance");
+			base.Upload(Collection ?? "Performance");
 		}
 	}
 

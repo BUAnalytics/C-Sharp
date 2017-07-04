@@ -18,7 +18,7 @@
 			if (Value != null){ Add("value", Value); }
 			if (Highest != null){ Add("highest", Highest); }
 
-			this.Upload(Collection ?? "Scores");
+			base.Upload(Collection ?? "Scores");
 		}
 	}
 }

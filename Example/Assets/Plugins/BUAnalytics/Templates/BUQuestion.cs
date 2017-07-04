@@ -54,7 +54,7 @@ namespace BUAnalytics{
 			if (Answer != null){ Add("answer", Answer); }
 			if (Correct != null){ Add("correct", Correct); }
 
-			this.Upload(Collection ?? "Questions");
+			base.Upload(Collection ?? "Questions");
 		}
 	}
 

@@ -34,7 +34,7 @@
 			//Add optional fields
 			if (Location != null){ Add("location", Location); }
 
-			this.Upload(Collection ?? Collection);
+			base.Upload(Collection ?? Collection);
 		}
 	}
 
