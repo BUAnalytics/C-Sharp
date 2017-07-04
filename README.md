@@ -92,6 +92,12 @@ The default is 2000 milliseconds and setting it to 0 will disable automatic uplo
 BUCollectionManager.Instance.Interval = 4000;
 ```
 
+You can use this convenience method to quickly add a document to a collection name which will be created if needed.
+
+```csharp
+BUCollectionManager.Instance.Add("Users", new BUDocument(new Dictionary<string, object>(){ ... }))
+```
+
 ## Error Handling
 
 You can subscribe to actions in the collection manager to notify you when collections upload successfully or return errors.
