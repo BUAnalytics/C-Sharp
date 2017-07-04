@@ -5,42 +5,57 @@ namespace BUAnalytics{
 
 	public class BUSession: BUDocument{
 
+		public string Collection;
+
 		public static BUSession Current;
 
-		//Fields
+		public string SessionId = BUID.Instance.Generate();
+		public string UserId = BUID.Instance.Generate();
 
-		public string SessionId = Guid.NewGuid().ToString();
-		public DateTime Start = DateTime.UtcNow;
-		public DateTime End;
+		public DateTime? Started = DateTime.UtcNow;
+		public DateTime? Ended;
 
-		//Methods
+		public string Ip;
+		public string Device;
+		public string System;
+		public string Version;
 
-		public BUSession(): base(){
-			BUSession.Current = this;
+		public BUSession(string collection) {
+			Collection = collection;
 		}
 
-		public void Commit(){
+		public void Start(){
+			Started = DateTime.UtcNow;
+		}
 
-			//End session
-			End = DateTime.UtcNow;
+		public void End(){
+			Ended = DateTime.UtcNow;
+		}
 
-			//Add document fields
-			if (SessionId != null){ this.Contents["SessionId"] = SessionId; }
-			if (Start != null){ this.Contents["Start"] = Start; }
-			if (End != null){ this.Contents["End"] = End; }
+		public void Upload(){
+			
+			//Add required fields
+			this.AddRange(new Dictionary<string, object>(){
+				{ "sessionId", SessionId },
+				{ "started", Started },
+				{ "ended", Ended ?? DateTime.UtcNow },
+				{ "length", (Ended ?? DateTime.UtcNow) - Started }
+			});
 
-			//Add common fields
-			if (BUPlayer.Current != null){ this.Contents["UserId"] = BUPlayer.Current.UserId; }
+			//Add optional fields
+			if (UserId != null){ Add("userId", UserId); }
+			if (Ip != null){ Add("ip", Ip); }
+			if (Device != null){ Add("device", Device); }
+			if (System != null){ Add("system", System); }
+			if (Version != null){ Add("version", Version); }
 
-			//Create collection if non existant and add document
-			string collection = "Sessions";
-			if (!BUCollectionManager.Instance.Collections.ContainsKey(collection)) {
-				BUCollectionManager.Instance.Create(new string[]{ collection });
+			//Add to collection manager
+			BUCollectionManager.Instance.Add(Collection ?? "Sessions", document: this);
+
+			//Remove current if self
+			if (BUSession.Current == this){
+				BUSession.Current = null;
 			}
-			BUCollectionManager.Instance.Collections[collection].Add(this);
-
-			//Reset session
-			BUPlayer.Current = null;
 		}
 	}
 }

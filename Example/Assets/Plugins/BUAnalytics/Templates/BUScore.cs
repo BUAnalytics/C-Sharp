@@ -1,34 +1,24 @@
-﻿using System;
+﻿namespace BUAnalytics{
 
-namespace BUAnalytics{
-
-	public class BTScore: BUDocument{
+	public class BTScore: BUTemplate{
 		
-		//Fields
+		public string Collection;
 
-		public double Score = 0;
+		public int? Value;
+		public bool? Highest;
 
-		//Methods
-
-		public BTScore(double score): base(){
-			this.Score = score;
+		public BTScore(int value, string collection) {
+			Value = value;
+			Collection = collection;
 		}
 
-		public void Commit(){
+		public void Upload(){
 
-			//Add document fields
-			if (Score != null){ this.Contents["Score"] = Score; }
+			//Add optional fields
+			if (Value != null){ Add("value", Value); }
+			if (Highest != null){ Add("highest", Highest); }
 
-			//Add common fields
-			if (BUPlayer.Current != null){ this.Contents["UserId"] = BUPlayer.Current.UserId; }
-			if (BUSession.Current != null){ this.Contents["SessionId"] = BUSession.Current.SessionId; }
-
-			//Create collection if non existant and add document
-			string collection = "Scores";
-			if (!BUCollectionManager.Instance.Collections.ContainsKey(collection)) {
-				BUCollectionManager.Instance.Create(new string[]{ collection });
-			}
-			BUCollectionManager.Instance.Collections[collection].Add(this);
+			this.Upload(Collection ?? "Scores");
 		}
 	}
 }

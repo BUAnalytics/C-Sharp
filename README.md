@@ -2,7 +2,7 @@
 
 BU Analytics plugin for C# and Unity written in .NET.
 
-For the library please navigate to [Plugins](src/Assets/Plugins/BUAnalytics).
+For the library please navigate to [Plugins](Example/Assets/Plugins/BUAnalytics).
 
 ## Installation
 
