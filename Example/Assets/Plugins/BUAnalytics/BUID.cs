@@ -76,7 +76,7 @@ namespace BUAnalytics{
 
 				//Cast and add identifiers from response
 				foreach(JSONNode id in response["ids"].AsArray){
-					Identifiers.Add(id as string);
+					Identifiers.Add(id.ToString().Replace("\"", ""));
 				}
 			});
 		}

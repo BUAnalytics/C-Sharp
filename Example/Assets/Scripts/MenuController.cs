@@ -24,8 +24,8 @@ public class MenuController : MonoBehaviour {
 		genderSelect = GameObject.Find("GenderSelect").GetComponentInChildren<Dropdown>();
 
 		//Set backend api url and authentication details
-		BUAPI.Instance.Auth = new BUAccessKey("58ac40cd126553000c426f91", "06239e3a1401ba6d7250260d0f8fd680e52ff1e754ebe10a250297ebda2bac41");
-		//BGAPI.Instance.URL = "https://192.168.0.69"; //Defaults to https://bu-games.bmth.ac.uk
+		BUAPI.Instance.Auth = new BUAccessKey("5962787b31a99500010a429f", "4fe5a14142b36e7967080df6cdd64042c6f00b5d3433ab3f2baa82c988c924c5");
+		//BUAPI.Instance.URL = "https://192.168.0.69"; //Defaults to https://bu-games.bmth.ac.uk
 
 		//Start loading a cache of 200 unique identifiers from backend
 		BUID.Instance.Start(200);
