@@ -2,6 +2,8 @@
 
 BU Analytics plugin for C# and Unity written in .NET.
 
+Please visit our [BU Analytics](http://bu-games.bmth.ac.uk) website for more information.
+
 For the library please navigate to [Plugins](Example/Assets/Plugins/BUAnalytics).
 
 ## Installation
@@ -17,12 +19,25 @@ Then pass these details into the api singleton instance.
 BUAPI.Instance.Auth = new BUAccessKey("58ac40cd126553000c426f91", "06239e3a1401ba6d7250260d0f8fd680e52ff1e754ebe10a250297ebda2bac41");
 ```
 
-The hostname defaults to the university server although we can change this if necessary.
+## Getting Started
+
+You can use the convenience method to quickly add a document to a collection which will be created and uploaded automatically.
 
 ```csharp
-BUAPI.Instance.URL = "https://192.168.0.x";
-BUAPI.Instance.Path = "/api/v1";
+BUCollectionManager.Instance.Add("Users", new Dictionary<string, object>(){
+    { "userId", .. },
+    { "name", .. },
+    { "age", .. },
+    { "gender", .. },
+    { "device", new Dictionary<string, string>{
+        { "type", .. },
+        { "name", .. },
+        { "model", .. },
+    } }
+})
 ```
+
+If you would like to manage your own collections and documents please see below.
 
 ## Creating Collections
 
@@ -92,23 +107,17 @@ The default is 2000 milliseconds and setting it to 0 will disable automatic uplo
 BUCollectionManager.Instance.Interval = 4000;
 ```
 
-You can use this convenience method to quickly add a document to a collection name which will be created if needed.
-
-```csharp
-BUCollectionManager.Instance.Add("Users", new BUDocument(new Dictionary<string, object>(){ ... }))
-```
-
 ## Error Handling
 
 You can subscribe to actions in the collection manager to notify you when collections upload successfully or return errors.
 
 ```csharp
 BUCollectionManager.Instance.Error = (collection, errorCode) => {
-  //...
+    //...
 };
 
 BUCollectionManager.Instance.Success = (collection, successCount) => {
-  //...
+    //...
 };
 ```
 
@@ -127,7 +136,7 @@ Once the cache has been marked as ready you can generate identifiers at any time
 
 ```csharp
 if (BUID.Instance.IsReady){
-  userDoc.Add("userId", BUID.Instance.Generate());
+    userDoc.Add("userId", BUID.Instance.Generate());
 }
 ```
 
@@ -137,4 +146,13 @@ GUIDs will be generated as a backup should the cache become empty.
 ```csharp
 BUID.Instance.Interval = 4000;
 BUID.Instance.Size = 100;
+```
+
+## Advanced
+
+The hostname defaults to the university server although we can change this if necessary.
+
+```csharp
+BUAPI.Instance.URL = "https://192.168.0.x";
+BUAPI.Instance.Path = "/api/v1";
 ```
