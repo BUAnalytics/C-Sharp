@@ -4,11 +4,11 @@ BU Analytics plugin for C# and Unity written in .NET.
 
 Please visit our [BU Analytics](http://bu-games.bmth.ac.uk) website for more information.
 
-For the library please navigate to [Plugins](Example/Assets/Plugins/BUAnalytics).
-
 ## Installation
 
-To install the plugin you must copy the [BUAnalytics](src/Assets/Plugins) folder into your Unity project under the /Assets/Plugins directory.
+For Unity you must install the BUAnalytics package into your project by navigating to `Edit > Import Package > Custom Package`.
+
+For native C# you must copy the BUAnalytics library from the [BUAnalytics](src/Assets/Plugins) folder into your Visual Studio project.
 
 ## Authentication
 
