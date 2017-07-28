@@ -34,7 +34,7 @@ BUCollectionManager.Instance.Add("Users", new Dictionary<string, object>(){
         { "name", .. },
         { "model", .. },
     } }
-})
+});
 ```
 
 If you would like to manage your own collections and documents please see below.
