@@ -35,6 +35,9 @@ namespace BUAnalytics{
 		}
 
 		//Convenience method for adding a document to a collection and creating the collection if non-existant
+		public void Add(string collection, Dictionary<string, object> document){
+			this.Add(collection, new BUDocument(document));
+		}
 		public void Add(string collection, BUDocument document){
 
 			//Check whether document exists and create
